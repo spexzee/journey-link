@@ -1,77 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Leaflet CSS
-import L from 'leaflet'; // Leaflet for icon customization
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
-// Import marker images
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+const MapComponent = ({ roomId, socket, location }) => {
+  const [userLocations, setUserLocations] = useState([]);
 
-// Fix marker icons not showing after deployment
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
-
-const MapComponent = ({ roomId, socket, location, users }) => {
-  const [userLocations, setUserLocations] = useState({});
-
-  // Update user's location periodically
+  // When the component mounts, handle socket events
   useEffect(() => {
     if (socket && roomId) {
-      const interval = setInterval(() => {
-        socket.emit('update-location', { roomId, location });
-      }, 5000);
+      // Listen for when a user joins and receive all users' locations
+      socket.on('user-joined', (locations) => {
+        setUserLocations(locations);
+      });
 
-      // Clean up interval on component unmount
-      return () => clearInterval(interval);
-    }
-  }, [socket, roomId, location]);
-
-  // Update user locations when new data is received
-  useEffect(() => {
-    if (socket) {
+      // Listen for location updates from users
       socket.on('location-updated', (locations) => {
         setUserLocations(locations);
       });
 
-      // Clean up the event listener on component unmount
+      // Emit the current user's location when joining
+      socket.emit('join-room', { roomId, location });
+
+      // Clean up the socket listeners when the component unmounts
       return () => {
+        socket.off('user-joined');
         socket.off('location-updated');
       };
     }
-  }, [socket]);
-
-  // Component to update the map view
-  const SetViewOnChange = ({ location }) => {
-    const map = useMap();
-    useEffect(() => {
-      map.setView(location);
-    }, [location, map]);
-    return null;
-  };
+  }, [socket, roomId, location]);
 
   return (
     <MapContainer center={location} zoom={13} style={{ height: '100vh', width: '100%' }}>
-      <SetViewOnChange location={location} />
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
       />
-      
       {/* Show the current user's location */}
       <Marker position={location}>
         <Popup>Your location</Popup>
       </Marker>
 
       {/* Show other users' locations */}
-      {Object.entries(userLocations).map(([userId, userLocation]) => (
-        <Marker key={userId} position={userLocation}>
-          <Popup>User {userId}</Popup>
+      {userLocations.map((user) => (
+        <Marker key={user.id} position={user.location}>
+          <Popup>User {user.id}</Popup>
         </Marker>
       ))}
     </MapContainer>
