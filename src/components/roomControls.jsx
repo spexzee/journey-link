@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../App.css'; // Import the CSS file
 
 const RoomControls = ({ joinRoom }) => {
   const [inputRoomId, setInputRoomId] = useState('');
@@ -63,17 +64,19 @@ const RoomControls = ({ joinRoom }) => {
   };
 
   return (
-    <div>
-      <button onClick={generateRoomId}>Create Room</button>
-      {createdRoomId && <p>Room ID: {createdRoomId}</p>}
-      
-      <input
-        type="text"
-        value={inputRoomId}
-        onChange={(e) => setInputRoomId(e.target.value)}
-        placeholder="Enter Room ID"
-      />
-      <button onClick={handleJoinRoom}>Join Room</button>
+    <div className="room-controls-container">
+      <div className="room-controls">
+        <button onClick={generateRoomId}>Create Room</button>
+        {createdRoomId && <p>Room ID: {createdRoomId}</p>}
+        
+        <input
+          type="text"
+          value={inputRoomId}
+          onChange={(e) => setInputRoomId(e.target.value)}
+          placeholder="Enter Room ID"
+        />
+        <button onClick={handleJoinRoom}>Join Room</button>
+      </div>
     </div>
   );
 };
