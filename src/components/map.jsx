@@ -62,6 +62,8 @@ const MapComponent = ({ roomId, socket }) => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <h2>Room ID: {roomId}</h2>
         <button onClick={copyToClipboard} style={{ marginLeft: '10px' }}>Copy</button>
+        <span style={{ marginLeft: '20px' }}>Users Joined: {+userLocations.length * 0.5}</span>
+        {console.log(userLocations)}
       </div>
       <MapContainer center={location} zoom={13} style={{ height: '100vh', width: '100%' }}>
         <TileLayer
@@ -75,7 +77,7 @@ const MapComponent = ({ roomId, socket }) => {
 
         {/* Show other users' locations */}
         {userLocations.map((user) => (
-          <Marker key={user.id} position={user.location}>
+          <Marker key={user.id || user.location.lat + user.location.lng} position={user.location}>
             <Popup>User {user.id}</Popup>
           </Marker>
         ))}
