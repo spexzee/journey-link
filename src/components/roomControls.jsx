@@ -68,7 +68,8 @@ const RoomControls = ({ joinRoom }) => {
       <div className="room-controls">
         <button onClick={generateRoomId}>Create Room</button>
         {createdRoomId && <p>Room ID: {createdRoomId}</p>}
-        
+        <br />
+        <span>--------------- OR ---------------</span>
         <input
           type="text"
           value={inputRoomId}
