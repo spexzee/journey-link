@@ -17,8 +17,12 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const MapComponent = ({ roomId, socket, location }) => {
+const MapComponent = ({ roomId, socket }) => {
   const [userLocations, setUserLocations] = useState([]);
+  const [location, setLocation] = useState(() => {
+    const savedLocation = localStorage.getItem('location');
+    return savedLocation ? JSON.parse(savedLocation) : { lat: 51.505, lng: -0.09 };
+  });
 
   // When the component mounts, handle socket events
   useEffect(() => {
@@ -44,24 +48,39 @@ const MapComponent = ({ roomId, socket, location }) => {
     }
   }, [socket, roomId, location]);
 
-  return (
-    <MapContainer center={location} zoom={13} style={{ height: '100vh', width: '100%' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
-      {/* Show the current user's location */}
-      <Marker position={location}>
-        <Popup>Your location</Popup>
-      </Marker>
+  // Function to copy room ID to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(roomId).then(() => {
+      alert('Room ID copied to clipboard!');
+    }).catch((err) => {
+      console.error('Failed to copy: ', err);
+    });
+  };
 
-      {/* Show other users' locations */}
-      {userLocations.map((user) => (
-        <Marker key={user.id} position={user.location}>
-          <Popup>User {user.id}</Popup>
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <h2>Room ID: {roomId}</h2>
+        <button onClick={copyToClipboard} style={{ marginLeft: '10px' }}>Copy</button>
+      </div>
+      <MapContainer center={location} zoom={13} style={{ height: '100vh', width: '100%' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        {/* Show the current user's location */}
+        <Marker position={location}>
+          <Popup>Your location</Popup>
         </Marker>
-      ))}
-    </MapContainer>
+
+        {/* Show other users' locations */}
+        {userLocations.map((user) => (
+          <Marker key={user.id} position={user.location}>
+            <Popup>User {user.id}</Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 };
 

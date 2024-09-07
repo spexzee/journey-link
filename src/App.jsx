@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import io from 'socket.io-client';
 import MapComponent from './components/map'; // Map component for showing map and locations
 import RoomControls from './components/roomControls'; // Component for creating/joining room
@@ -38,28 +39,13 @@ const App = () => {
     };
   }, [socket]);
 
-  // Handle joining a room
-  const joinRoom = (newRoomId) => {
-    setRoomId(newRoomId);
-    console.log(`Joining room ${newRoomId} with location:`, location);
-    socket.emit('join-room', { roomId: newRoomId, location });
-  };
-
   return (
-    <div>
-      {/* RoomControls for creating or joining a room */}
-      <RoomControls joinRoom={joinRoom} />
-
-      {/* Show the map with user locations if a room is joined */}
-      {roomId && (
-        <MapComponent
-          roomId={roomId}
-          socket={socket}
-          location={location}
-          users={users}
-        />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RoomControls joinRoom={setRoomId} />} />
+        <Route path="/map/:roomId" element={<MapComponent roomId={roomId} socket={socket} location={location} users={users} />} />
+      </Routes>
+    </Router>
   );
 };
 
