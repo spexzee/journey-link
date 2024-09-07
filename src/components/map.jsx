@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet'; // Leaflet for icon customization
@@ -19,6 +19,7 @@ L.Icon.Default.mergeOptions({
 
 const MapComponent = ({ roomId, socket }) => {
   const [userLocations, setUserLocations] = useState([]);
+  const [userCount, setUserCount] = useState(0);
   const [location, setLocation] = useState(() => {
     const savedLocation = localStorage.getItem('location');
     return savedLocation ? JSON.parse(savedLocation) : { lat: 51.505, lng: -0.09 };
@@ -27,23 +28,19 @@ const MapComponent = ({ roomId, socket }) => {
   // When the component mounts, handle socket events
   useEffect(() => {
     if (socket && roomId) {
-      // Listen for when a user joins and receive all users' locations
-      socket.on('user-joined', (locations) => {
-        setUserLocations(locations);
-      });
-
-      // Listen for location updates from users
       socket.on('location-updated', (locations) => {
         setUserLocations(locations);
       });
 
-      // Emit the current user's location when joining
+      socket.on('user-count-updated', (count) => {
+        setUserCount(count);
+      });
+
       socket.emit('join-room', { roomId, location });
 
-      // Clean up the socket listeners when the component unmounts
       return () => {
-        socket.off('user-joined');
         socket.off('location-updated');
+        socket.off('user-count-updated');
       };
     }
   }, [socket, roomId, location]);
@@ -62,7 +59,7 @@ const MapComponent = ({ roomId, socket }) => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <h2>Room ID: {roomId}</h2>
         <button onClick={copyToClipboard} style={{ marginLeft: '10px' }}>Copy</button>
-        <span style={{ marginLeft: '20px' }}>Users Joined: {Number(userLocations.length)*0.5}</span>
+        <span style={{ marginLeft: '20px' }}>Users Joined: {userCount}</span>
       </div>
       <MapContainer center={location} zoom={13} style={{ height: '100vh', width: '100%' }}>
         <TileLayer
