@@ -5,7 +5,7 @@ import MapComponent from './components/map'; // Map component for showing map an
 import RoomControls from './components/roomControls'; // Component for creating/joining room
 
 // Connect to the Socket.IO server
-const socket = io('wss://server-road-trip.vercel.app', {
+const socket = io('https://server-road-trip.vercel.app', {
   secure : true,
   transports: ["websocket", "polling"]
 });
