@@ -1,0 +1,81 @@
+/* MapComponent.css */
+
+
+.map-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 5px;
+    flex-wrap: wrap;
+    padding: 10px 5px;
+}
+
+/* Flex container for Room ID and copy icon */
+.room-id-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between Room ID and copy icon */
+}
+
+.room-id {
+    color: #0012bc;
+    background: #80808059;
+    padding: 5px 5px;
+    border-radius: 9px;
+}
+
+.copy-icon {
+    cursor: pointer;
+}
+
+.user_joined-headding {
+    background: #80808059;
+    padding: 5px 5px;
+    border-radius: 9px;
+}
+
+.user-count {
+    color: #0012bc;
+}
+
+.map-container {
+    height: calc(100vh - 80px);
+    width: 100%;
+    max-width: 100%;
+}
+
+.direction-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .map-header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .direction-button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .direction-button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
