@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import io from 'socket.io-client';
 import MapComponent from './components/map'; // Map component for showing map and locations
 import RoomControls from './components/roomControls'; // Component for creating/joining room
+import Login from './components/login';
 
 // Connect to the Socket.IO server
-const socket = io('https://server-road-trip.vercel.app', {
+const socket = io('http://localhost:3000', {
   secure : true,
   transports: ["websocket", "polling"]
 });
@@ -45,7 +46,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<RoomControls joinRoom={setRoomId} />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/roomCreate" element={<RoomControls joinRoom={setRoomId} />} />
         <Route path="/map/:roomId" element={<MapComponent roomId={roomId} socket={socket} location={location} users={users} />} />
       </Routes>
     </Router>

@@ -66,17 +66,18 @@ const RoomControls = ({ joinRoom }) => {
   return (
     <div className="room-controls-container">
       <div className="room-controls">
-        <button onClick={generateRoomId}>Create Room</button>
-        {createdRoomId && <p>Room ID: {createdRoomId}</p>}
+        <button className="btn-primary" onClick={generateRoomId}>Create Room</button>
+        {createdRoomId && <p className="room-id">Room ID: {createdRoomId}</p>}
         <br />
-        <span>--------------- OR ---------------</span>
+        <span className="separator">--------------- OR ---------------</span>
         <input
           type="text"
           value={inputRoomId}
           onChange={(e) => setInputRoomId(e.target.value)}
           placeholder="Enter Room ID"
+          className="input-room-id"
         />
-        <button onClick={handleJoinRoom}>Join Room</button>
+        <button className="btn-primary" onClick={handleJoinRoom}>Join Room</button>
       </div>
     </div>
   );
