@@ -4,6 +4,8 @@ import io from 'socket.io-client';
 import MapComponent from './components/map'; // Map component for showing map and locations
 import RoomControls from './components/roomControls'; // Component for creating/joining room
 import Login from './components/login';
+import Register from './components/register';
+import Dashboard from './components/dashboard';
 
 // Connect to the Socket.IO server
 const socket = io('http://localhost:3000', {
@@ -46,7 +48,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/roomCreate" element={<RoomControls joinRoom={setRoomId} />} />
         <Route path="/map/:roomId" element={<MapComponent roomId={roomId} socket={socket} location={location} users={users} />} />
       </Routes>

@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css'; // Import the CSS file
+import useStore from '../zustand/store';
+useStore
 
 const RoomControls = ({ joinRoom }) => {
   const [inputRoomId, setInputRoomId] = useState('');
   const [createdRoomId, setCreatedRoomId] = useState('');
   const navigate = useNavigate();
 
+  const userData = useStore((state)=>state.userData)
+
   // Generate a new room ID and ask for location permission
   const generateRoomId = () => {
     const newRoomId = Math.random().toString(36).substring(2, 11);
     setCreatedRoomId(newRoomId);
     joinRoom(newRoomId); // Join the newly created room
+
 
     // Ask for location permission
     navigator.geolocation.getCurrentPosition(

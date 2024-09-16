@@ -1,8 +1,11 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
+
+// Example Zustand store
 
 const useStore = create((set) => ({
-    userData: {},
-    setUserData: (data) => set({ userData: data }),
+    userData: null,
+    setUserData: (newUser) => set({ userData: newUser }), // Ensure this updates the state
 }));
+
 
 export default useStore;

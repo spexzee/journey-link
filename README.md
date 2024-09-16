@@ -8,8 +8,3 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
-<!-- todo -->
-register and login page -> with profile pic
-click marker it should show username and photo
-get direction feature
-one div that shows who are joined the room with there userbname and photo and get direction button
