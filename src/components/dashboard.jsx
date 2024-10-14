@@ -12,7 +12,7 @@ const Dashboard = () => {
           onClick={() => navigate('/login')} 
           style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', cursor: 'pointer', borderRadius: '5px', marginRight: '10px' }}
         >
-          Login
+          LOGIN
         </button>
         <button 
           onClick={() => navigate('/register')} 
