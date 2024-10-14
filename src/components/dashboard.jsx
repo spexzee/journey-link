@@ -18,7 +18,7 @@ const Dashboard = () => {
           onClick={() => navigate('/register')} 
           style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', cursor: 'pointer', borderRadius: '5px' }}
         >
-          Register
+          REGISTER
         </button>
       </div>
     </div>
