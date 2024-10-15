@@ -33,6 +33,8 @@ const MapComponent = ({ roomId, socket }) => {
   const [map, setMap] = useState(null); // State to store the map instance
   const [routeControl, setRouteControl] = useState(null); // State to manage route control
 
+  const username = "" //need to fetch from db
+
   useEffect(() => {
     if (socket && roomId) {
       socket.on('location-updated', (locations) => {
