@@ -80,25 +80,30 @@ const MapComponent = ({ roomId, socket }) => {
 
   return (
     <div className="map-component">
-      <div className="map-header">
-        {/* Wrap Room ID and Copy button */}
-        <div className="room-id-container">
-          <h2>
-            Room ID: <span className="room-id">{roomId}</span>
-          </h2>
-          <MdFileCopy size={25} onClick={copyToClipboard} className="copy-icon" />
-        </div>
+      {window.location.pathname !== '/map/demoMap' && (
+        <div className="map-header">
+          {/* Wrap Room ID and Copy button */}
 
-        <h2 className='user_joined-headding'>
-          Users Joined: <span className="user-count">{userCount}</span>
-        </h2>
-      </div>
+          <div className="room-id-container">
+            <h2>
+              Room ID: <span className="room-id">{roomId}</span>
+            </h2>
+            <MdFileCopy size={25} onClick={copyToClipboard} className="copy-icon" />
+          </div>
+
+
+          <h2 className='user_joined-headding'>
+            Users Joined: <span className="user-count">{userCount}</span>
+          </h2>
+        </div>
+      )}
 
       <MapContainer
         center={location}
         zoom={13}
         className="map-container"
         whenCreated={setMap}
+        style={{ height: window.location.pathname === '/map/demoMap' ? '100vh' : 'calc(100vh - 80px)' }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
