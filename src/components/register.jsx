@@ -37,48 +37,16 @@ const Register = () => {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      backgroundImage: 'url("https://i.pinimg.com/736x/fa/f3/7d/faf37db5afe35eea16a36d54f2cc048a.jpg")',  // Use the same bike image for consistency
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      position: 'relative',
-      fontFamily: 'Arial, sans-serif',
-    }}>
+    <div className="flex justify-center items-center h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("https://i.pinimg.com/736x/fa/f3/7d/faf37db5afe35eea16a36d54f2cc048a.jpg")' }}>
       {/* Overlay with opacity */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Black overlay with opacity
-      }}></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {/* Register form container */}
-      <div style={{
-        zIndex: 1,  // Ensure the form is on top of the background and overlay
-        maxWidth: '700px',
-        padding: '60px',
-        borderRadius: '15px',
-        textAlign: 'center',
-        color: '#fff',  // White text to stand out on dark background
-        background: 'transparent',  // Fully transparent background
-        border: '2px solid rgba(255, 255, 255, 0.5)',  // Optional border for better visibility
-        boxShadow: '0 4px 30px rgba(255, 255, 255, 0.2)',  // White shadow effect
-        transition: 'box-shadow 0.3s ease',  // Transition for hover effect
-      }}
-      onMouseOver={(e) => e.currentTarget.style.boxShadow = '0 8px 40px rgba(255, 255, 255, 0.6)'}
-      onMouseOut={(e) => e.currentTarget.style.boxShadow = '0 4px 30px rgba(255, 255, 255, 0.2)'}
-      >
-        <h2 style={{ fontSize: '28px', marginBottom: '20px' }}>Create Account</h2>
+      <div className="z-10 max-w-lg p-16 rounded-lg text-center text-white border-2 border-white border-opacity-50 shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+        <h2 className="text-2xl mb-5">Create Account</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           
-          <div style={{ marginBottom: '20px' }}>
+          <div className="mb-5">
             <input
               id='email'
               type="email"
@@ -90,88 +58,40 @@ const Register = () => {
                   message: 'Enter a valid email address'
                 }
               })}
-              style={{
-                width: '100%',
-                padding: '15px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.5)',  // Lighter border for inputs
-                background: 'transparent',  // Transparent input background
-                color: '#fff',  // White text for inputs
-                fontSize: '18px',
-                boxSizing: 'border-box',
-              }}
+              className="w-full p-4 rounded-lg border border-white border-opacity-50 bg-transparent text-white text-lg box-border"
             />
-            {errors.email && <p style={{ color: 'red', fontSize: '12px' }}>{errors.email.message}</p>}
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div className="mb-5">
             <input
               id='username'
               type="text"
               placeholder="Username"
               {...register('username', { required: 'Username is required' })}
-              style={{
-                width: '100%',
-                padding: '15px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.5)',  // Lighter border for inputs
-                background: 'transparent',  // Transparent input background
-                color: '#fff',  // White text for inputs
-                fontSize: '18px',
-                boxSizing: 'border-box',
-              }}
+              className="w-full p-4 rounded-lg border border-white border-opacity-50 bg-transparent text-white text-lg box-border"
             />
-            {errors.username && <p style={{ color: 'red', fontSize: '12px' }}>{errors.username.message}</p>}
+            {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div className="mb-5">
             <input
               id='password'
               type="password"
               placeholder="Password"
               {...register('password', { required: 'Password is required' })}
-              style={{
-                width: '100%',
-                padding: '15px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.5)',  // Lighter border for inputs
-                background: 'transparent',  // Transparent input background
-                color: '#fff',  // White text for inputs
-                fontSize: '18px',
-                boxSizing: 'border-box',
-              }}
+              className="w-full p-4 rounded-lg border border-white border-opacity-50 bg-transparent text-white text-lg box-border"
             />
-            {errors.password && <p style={{ color: 'red', fontSize: '12px' }}>{errors.password.message}</p>}
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
-          <button type="submit" style={{
-            backgroundColor: 'rgba(76, 175, 80, 0.7)',  // Slightly transparent green button
-            color: 'white',
-            padding: '15px',
-            borderRadius: '10px',
-            border: 'none',
-            cursor: 'pointer',
-            width: '100%',
-            fontSize: '18px',
-            transition: 'background-color 0.3s ease, box-shadow 0.3s ease',  // Add box-shadow transition
-            marginBottom: '15px',
-            boxShadow: '0 4px 20px rgba(255, 255, 255, 0.2)',  // Initial box-shadow
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = 'rgba(69, 160, 73, 0.9)';
-            e.target.style.boxShadow = '0 8px 40px rgba(255, 255, 255, 0.4)';  // Hover box-shadow
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = 'rgba(76, 175, 80, 0.7)';
-            e.target.style.boxShadow = '0 4px 20px rgba(255, 255, 255, 0.2)';  // Reset box-shadow
-          }}
-          >
+          <button type="submit" className="bg-green-600 bg-opacity-70 text-white p-4 rounded-lg w-full text-lg transition-colors duration-300 hover:bg-green-700 hover:shadow-lg mb-4">
             Register
           </button>
 
-          <span style={{ display: 'block', color: '#fff', marginTop: '10px', fontSize: '16px' }}>
+          <span className="block text-white mt-2 text-lg">
             Already have an account? 
-            <a onClick={() => navigate('/login')} style={{ textDecoration: 'underline', cursor: 'pointer', color: '#fff' }}>
+            <a onClick={() => navigate('/login')} className="underline cursor-pointer text-white">
               Login
             </a>
           </span>
